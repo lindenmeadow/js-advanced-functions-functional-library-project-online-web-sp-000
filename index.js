@@ -23,8 +23,18 @@ const fi = (function() {
         return newCollection;
     },
 
-    reduce: function() {
+    reduce: function(collection, callback, accumulator) {
+      let items = collection;
 
+      if(!accumulator){
+        accumulator = items[0];
+        items =items.slice(1)
+      }
+
+      for(const item of items){
+        accumulator = callback(accumulator, item, items)
+      }
+      return accumulator;
     },
 
     functions: function() {
