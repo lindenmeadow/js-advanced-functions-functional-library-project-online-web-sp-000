@@ -63,13 +63,7 @@ const fi = (function() {
 
     compact:function(array){
       const compact = [];
-/*try using mapping for this section, lines 75,76*/
         array.map(item => !!item ? compact.push(item): item)
-        /*for(const item of array){
-          if(!!item){
-            compact.push(item)
-          }*/
-
         return compact;
       },
 
