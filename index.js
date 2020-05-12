@@ -37,6 +37,14 @@ const fi = (function() {
       return accumulator;
     },
 
+    find:function(collections, callback){
+      for (const item of collections){
+        if(callback(item)){
+          return item;
+        }
+      }
+    },	   
+
     functions: function() {
 
     },
