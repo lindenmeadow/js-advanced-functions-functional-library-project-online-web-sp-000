@@ -13,8 +13,14 @@ const fi = (function() {
       return collection;
     },
 
-    map: function() {
+    map: function(collection, callback) {
+      const items = (collection instanceof Array)? collection : Object.values(collection);
+      const newCollection = []
 
+        for(const item of items){
+          newCollection.push(callback(item));
+        }
+        return newCollection;
     },
 
     reduce: function() {
