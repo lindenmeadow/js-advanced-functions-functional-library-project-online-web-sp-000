@@ -60,11 +60,98 @@ const fi = (function() {
     last:function(array, n=0){
       return ((n === 0) ? array.slice(-1)[0] : array.slice(-n));
     },
+    
+    compact:function(array){
+      const compact = [];
+/*try using mapping for this section, lines 75,76*/
+        array.map(item => !!item ? compact.push(item): item)
+        /*for(const item of array){
+          if(!!item){
+            compact.push(item)
+          }*/
 
-    functions: function() {
+        return compact;
+      },
 
+      sortBy:function(array,cb){
+        const newSortedArray = [...array];
+        return newSortedArray.sort((a,b) => cb(a) - cb(b));
+      },
+
+      unpack: function(receiver, arr) {
+        for (let val of arr)
+          receiver.push(val)
+     },
+
+
+      flatten: function(collection, shallow, newArr=[]) {
+      if (!Array.isArray(collection)) return newArr.push(collection)
+      if (shallow) {
+        for (let val of collection)
+          Array.isArray(val) ? this.unpack(newArr, val) : newArr.push(val)
+      } else {
+        for (let val of collection) {
+          this.flatten(val, false, newArr)
+        }
+      }
+      return newArr
     },
 
+
+    uniqSorted: function(collection, iteratee) {
+      const sorted = [collection[0]]
+      for (let idx = 1; idx < collection.length; idx++) {
+        if (sorted[idx-1] !== collection[idx])
+          sorted.push(collection[idx])
+      }
+      return sorted
+    },
+
+    uniq: function(collection, sorted=false, iteratee=false) {
+      if (sorted) {
+        return fi.uniqSorted(collection, iteratee)
+      } else if (!iteratee) {
+        return Array.from(new Set(collection))
+      } else {
+        const modifiedVals = new Set()
+        const uniqVals = new Set()
+        for (let val of collection) {
+          const moddedVal = iteratee(val)
+          if (!modifiedVals.has(moddedVal)) {
+            modifiedVals.add(moddedVal)
+            uniqVals.add(val)
+          }
+        }
+        return Array.from(uniqVals)
+      }
+    },
+
+    keys:function(object){
+      const keys = []
+        for(let key in object){
+          keys.push(key)
+        }
+      return keys
+    },
+
+    values:function(object){
+      const values = []
+        for (let key in object){
+          values.push(object[key])
+        }
+        return values
+    },
+
+    functions: function(object){
+      const functionNames = []
+
+        for (let key in object){
+          if (typeof object[key] === "function"){
+            functionNames.push(key)
+          }
+        }
+        return functionNames.sort()
+    }
 
   }
 })()
