@@ -52,14 +52,14 @@ const fi = (function() {
     size: function(collection){
       collection = (collection instanceof Array) ? collection : Object.keys(collection)
       return collection.length;
-    },	
+    },
     first: function(array, n=0){
       return ((n === 0) ? array[0] : array.slice(0,n));
     },
 
     last:function(array, n=0){
       return ((n === 0) ? array.slice(-1)[0] : array.slice(-n));
-    },	
+    },
 
     functions: function() {
 
