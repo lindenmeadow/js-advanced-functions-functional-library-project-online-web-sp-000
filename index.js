@@ -44,6 +44,11 @@ const fi = (function() {
         }
       }
     },
+    filter:function(collection, callback){
+      const matches = [ ];
+      collection.filter(item => callback(item) ? matches.push(item): item)
+      return matches
+    },
 
     functions: function() {
 
